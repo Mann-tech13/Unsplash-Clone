@@ -4,14 +4,14 @@ import axios from 'axios'
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import './home.css'
 const pageNum = 1
 
 
 
-function Home() {
+function Home(props) {
+  console.log(props.data)
+  console.log("Hi")
   const [page, setPage] = useState(pageNum)
   const [value, setValue] = useState("Wallpaper")
   const url = `https://api.unsplash.com/search/photos?page=${page}&query=${value}&client_id=6-jCrab1xixjBkEIP_hGKukz3iB44nR3nAyDleOQops`
@@ -22,7 +22,6 @@ function Home() {
     const fetchData = async () => {
       const response = await axios.get(url);
       if (response) {
-        console.log(response)
         setImages([...images, ...response.data.results])
       }
     };
@@ -39,9 +38,9 @@ function Home() {
     if(Math.abs(Math.round(window.innerHeight + document.documentElement.scrollTop) - Math.round(document.documentElement.offsetHeight)) <= 1){
       // console.log("hi")
       scrolltoEnd()
-      console.log(window.innerHeight + document.documentElement.scrollTop)
-      console.log(document.documentElement.offsetHeight)
-      console.log(Math.abs(Math.round(window.innerHeight + document.documentElement.scrollTop) - Math.round(document.documentElement.offsetHeight)))
+      // console.log(window.innerHeight + document.documentElement.scrollTop)
+      // console.log(document.documentElement.offsetHeight)
+      // console.log(Math.abs(Math.round(window.innerHeight + document.documentElement.scrollTop) - Math.round(document.documentElement.offsetHeight)))
     }
   }
 
