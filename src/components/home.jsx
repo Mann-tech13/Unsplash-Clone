@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import randomWords from 'random-words'
 import axios from 'axios'
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -6,29 +7,48 @@ import Navbar from 'react-bootstrap/Navbar';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './home.css'
+const pageNum = 1
+
+
 
 function Home() {
-
+  const [page, setPage] = useState(pageNum)
   const [value, setValue] = useState("Wallpaper")
-  const url = `https://api.unsplash.com/search/photos?page=1&query=${value}&client_id=6-jCrab1xixjBkEIP_hGKukz3iB44nR3nAyDleOQops`
+  const url = `https://api.unsplash.com/search/photos?page=${page}&query=${value}&client_id=6-jCrab1xixjBkEIP_hGKukz3iB44nR3nAyDleOQops`
   const [images, setImages] = useState([])
   
-  // setValue("Wallpaper")
 
   useEffect(() => {
-    axios.get(url)
-      .then(response => {
-          setImages(response.data.results)
-          // console.log(response)
-      })
-      .catch(err => {
-        console.log(err)
-      },[])
-  })
+    const fetchData = async () => {
+      const response = await axios.get(url);
+      if (response) {
+        console.log(response)
+        setImages([...images, ...response.data.results])
+      }
+    };
+    fetchData();
+  }, [url]);
+
+  const scrolltoEnd = () => {
+    setPage(pageNum + 1)
+    let str = randomWords(1)[0]
+    setValue(str)
+  }
+
+  window.onscroll = function(){
+    if(Math.abs(Math.round(window.innerHeight + document.documentElement.scrollTop) - Math.round(document.documentElement.offsetHeight)) <= 1){
+      // console.log("hi")
+      scrolltoEnd()
+      console.log(window.innerHeight + document.documentElement.scrollTop)
+      console.log(document.documentElement.offsetHeight)
+      console.log(Math.abs(Math.round(window.innerHeight + document.documentElement.scrollTop) - Math.round(document.documentElement.offsetHeight)))
+    }
+  }
 
   return (
     <div>
       <div className="container">
+        
         <div className="container-content">
           <div className='heading'>Unsplash</div>
           <div className="desciption">
@@ -65,6 +85,13 @@ function Home() {
             )
           })
         }
+        {/* {
+          images.map((imgs) => {
+            return(
+              <img src={imgs} className="imgs" alt="" />
+            )
+          })
+        } */}
       </div>
 
     </div>

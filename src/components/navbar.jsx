@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import {Link} from "react-router-dom"
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
@@ -69,48 +70,47 @@ function Navbar() {
               Editorial
             </div>
             <div className="items">
-              Following
-            </div>
-            <div className="items">
               |
             </div>
-            <div className="items">
-              Current Events
+            <div className="items Events">
+              <Link to={{pathname: "/", data: "Events"}}>
+                Current Events
+              </Link>
             </div>
-            <div className="items">
+            <div className="items Wallpapers">
               Wallpapers
             </div>
-            <div className="items">
+            <div className="items Renders">
               3D Renders
             </div>
-            <div className="items">
+            <div className="items Textures">
               Textures and Patterns
             </div>
-            <div className="items">
+            <div className="items Experimental">
               Experimental
             </div>
-            <div className="items">
+            <div className="items Architecture">
               Architecture
             </div>
-            <div className="items">
+            <div className="items Nature">
               Nature
             </div>
-            <div className="items">
+            <div className="items Business">
               Business and Work
             </div>
-            <div className="items">
+            <div className="items Fashion">
               Fashion
             </div>
-            <div className="items">
+            <div className="items Film">
               Film
             </div>
-            <div className="items">
+            <div className="items Food">
               Food and Drink
             </div>
-            <div className="items">
+            <div className="items Health">
               Health and Wellness
             </div>
-            <div className="items">
+            <div className="items People">
               People
             </div>
           </div>
