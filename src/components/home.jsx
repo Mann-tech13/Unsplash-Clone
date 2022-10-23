@@ -25,6 +25,7 @@ function Home() {
   
   const url = `https://api.unsplash.com/search/photos?page=${page}&query=${value}&client_id=6-jCrab1xixjBkEIP_hGKukz3iB44nR3nAyDleOQops`
   
+// Fetching images from api
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +37,9 @@ function Home() {
     };
     fetchData();
   }, [url]);
+
+
+  // Implemeting lazy loading feature
 
   const scrolltoEnd = () => {
     setPage(pageNum + 1)
