@@ -1,27 +1,36 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import randomWords from 'random-words'
 import axios from 'axios'
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
 import './home.css'
+import {dataString} from "./navbar"
 const pageNum = 1
 
+function Home() {
 
-
-function Home(props) {
-  console.log(props.data)
-  console.log("Hi")
-  const [page, setPage] = useState(pageNum)
-  const [value, setValue] = useState("Wallpaper")
-  const url = `https://api.unsplash.com/search/photos?page=${page}&query=${value}&client_id=6-jCrab1xixjBkEIP_hGKukz3iB44nR3nAyDleOQops`
+  const searchData = useContext(dataString)
   const [images, setImages] = useState([])
+  const [res, setRes] = useState({})
+  const [page, setPage] = useState(pageNum)
+  const [value, setValue] = useState("Cat")
+
+  function handleNewLoading(){
+    setValue(searchData)
+  }
+  if(searchData.length > 0){
+    handleNewLoading()
+  }
+  
+  const url = `https://api.unsplash.com/search/photos?page=${page}&query=${value}&client_id=6-jCrab1xixjBkEIP_hGKukz3iB44nR3nAyDleOQops`
   
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(url);
       if (response) {
+        setRes(response)
         setImages([...images, ...response.data.results])
       }
     };
@@ -36,12 +45,14 @@ function Home(props) {
 
   window.onscroll = function(){
     if(Math.abs(Math.round(window.innerHeight + document.documentElement.scrollTop) - Math.round(document.documentElement.offsetHeight)) <= 1){
-      // console.log("hi")
       scrolltoEnd()
-      // console.log(window.innerHeight + document.documentElement.scrollTop)
-      // console.log(document.documentElement.offsetHeight)
-      // console.log(Math.abs(Math.round(window.innerHeight + document.documentElement.scrollTop) - Math.round(document.documentElement.offsetHeight)))
     }
+  }
+
+  const handleSearch = (e) => {
+    // console.log("Searched")
+    setValue(e.target.value)
+    setImages(res.data.results)
   }
 
   return (
@@ -64,7 +75,8 @@ function Home(props) {
                     placeholder="Search"
                     className="search"
                     aria-label="Search"
-                    onChange = {(e) => setValue(e.target.value)}
+                    onChange = {handleSearch}
+                    // (e) => setValue(e.target.value)
                   />
                 </Form>
               </Navbar.Collapse>
